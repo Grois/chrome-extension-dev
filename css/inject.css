@@ -1,3 +1,153 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+
+#not_support {
+    background: white;
+    position: fixed;
+    width: 240px;
+    height: 300px;
+    right: 30px;
+    top: 20px;
+    bottom: 20px;
+    /*background-color: rgb(255, 255, 255);*/
+    z-index: 2147483647;
+
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 2px;
+    border-radius: 8px;
+    -moz-border-radius: 8px; /* Old Firefox */
+
+}
+
+#coupon_close_btn {
+    text-align: right;
+    margin-right: 14px;
+    margin-top: 14px;
+}
+
+#img_not_support_birds {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#recommend {
+    text-align: center;
+    font-size: 20px;
+    color: #404040;
+    font-family: "Noto Sans CJK SC Regular";
+    margin-right: 20px;
+    line-height: 1.2;
+    margin-left: 20px;
+}
+
+#submit_btn {
+    text-align: center;
+    background: #2fc2a9;
+    border-radius: 7px;
+    margin-bottom: 24px;
+    margin-top: 16px;
+    width: 144px;
+    height: 36px;
+    border: none;
+    color: white;
+}
+
+/*coupon_list页面*/
+
+#coupon_list {
+    background: #f4f4f4;
+    position: fixed;
+    width: 380px;
+    max-height: 560px;
+    min-height: 280px;
+    right: 30px;
+    top: 20px;
+    bottom: 20px;
+    /*background-color: rgb(255, 255, 255);*/
+    z-index: 2147483647;
+
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 2px;
+    border-radius: 8px;
+    -moz-border-radius: 8px; /* Old Firefox */
+
+}
+
+#coupon_header {
+    border-radius: 8px;
+    width: 380px;
+    height: 60px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+}
+
+#coupon_brand_name {
+    width: 352px;
+    height: 60px;
+    text-align: center;
+    float: left;
+    background: white;
+    font-size: 20px;
+    color: #404040;
+}
+
+#coupon_list_close_btn {
+    float: right;
+    width: 28px;
+    background: white;
+    height: 60px;
+    text-align: center;
+}
+
+#coupon_list_close_btn img {
+    margin-top: 23px;
+    vertical-align: center;
+    margin-right: 14px;
+}
+
+#coupon_list_detail ul {
+    margin-top: 10px;
+    padding: 0;
+}
+
+#coupon_list_detail li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px;
+}
+
+.coupon_detail_item {
+    text-align: center;
+    /*width: 360px;*/
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #fff;
+    height: 80px;
+}
+
+.left_discount_info {
+    /*margin: 14px;*/
+    margin: 14px;
+    padding-top: 10px;
+    width: 50px;
+    height: 50px;
+    background: #2fc2a9;
+}
+
+
+/*---------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
 .chrome-plugin-demo-panel {
     position: fixed;
     right: 0;

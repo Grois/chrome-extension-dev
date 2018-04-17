@@ -16,9 +16,24 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log(request, sender, sendResponse);
     // var data=$.parseJSON(request);
     console.log(JSON.stringify(request));
-    var url = JSON.stringify(request).split("\"")[3];
-    var data = get_data(url);
-    sendResponse(data);
+
+    if (JSON.stringify(request).endsWith("url\"}")) {
+        var url = JSON.stringify(request).split("\"")[3];
+        var data = get_data(url);
+        sendResponse(data);
+    } else if (JSON.stringify(request).endsWith("support\"}")) {
+        var url = JSON.stringify(request).split("\"")[3];
+        var data = get_data(url);
+        console.log(data.status);
+        if (data.status) {
+            //    支持该站  图标变亮
+            active_browser_icon(true);
+        } else {
+            console.log(sender.tabId);
+            active_browser_icon(false);
+        }
+    }
+
 });
 
 
@@ -49,7 +64,7 @@ function get_data(url) {
         timeout: 3000,
         method: 'GET',
         success: function (data) {
-            console.log("success:" + data);
+            console.log("success:" + data.status);
             coupon_detail = data;
         },
         error: function (data) {
@@ -59,6 +74,31 @@ function get_data(url) {
     return coupon_detail;
 }
 
+
+function active_browser_icon(tag) {
+
+    getCurrentTabId(tabId => {
+        if (tag)
+            var path = chrome.extension.getURL("images/bird-logo.png");
+        else
+            var path = chrome.extension.getURL("images/bird-logo-gray.png");
+        console.log(tabId);
+        console.log(path);
+        chrome.browserAction.setIcon({
+            path: path,
+            tabId: tabId
+        });
+    });
+
+
+}
+
+// 获取当前选项卡ID
+function getCurrentTabId(callback) {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        if (callback) callback(tabs.length ? tabs[0].id : null);
+    });
+}
 
 // chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 //     var coupon_detail = "";

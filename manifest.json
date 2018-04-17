@@ -6,10 +6,10 @@
 
   "icons":
   {
-    "16": "images/get_started16.png",
-    "32": "images/get_started32.png",
-    "48": "images/get_started48.png",
-    "128": "images/get_started128.png"
+    "16": "images/bird-logo.png",
+    "32": "images/bird-logo.png",
+    "48": "images/bird-logo.png",
+    "128": "images/bird-logo.png"
   },
   "background":
   {
@@ -19,7 +19,7 @@
   // 浏览器右上角图标设置，browser_action、page_action、app必须三选一
   "browser_action":
   {
-    "default_icon": "images/get_started16.png",
+    "default_icon": "images/bird-logo-gray.png",
     // 图标悬停时的标题，可选
     "default_title": "这是一个示例Chrome插件"
 //    "default_popup": "popup.html"
@@ -58,7 +58,8 @@
   // 普通页面能够直接访问的插件资源列表，如果不设置是无法直接访问的
   "web_accessible_resources": ["js/inject.js"],
   // 插件主页，这个很重要，不要浪费了这个免费广告位
-  "homepage_url": "https://www.baidu.com"
+  "homepage_url": "https://www.baidu.com",
+  "web_accessible_resources": [ "css/*", "images/*", "fonts/*" ]
   // 覆盖浏览器默认页面
 //  "chrome_url_overrides":
 //  {

@@ -20,10 +20,10 @@
 // function show_notification() {
 //     chrome.notifications.create(null, {
 //         type: 'image',
-//         iconUrl: 'images/get_started16.png',
+//         iconUrl: 'images/bird-logo.png',
 //         title: 'support',
 //         message: 'Sorry, this site is not yet supported.',
-//         imageUrl: 'images/get_started16.png'
+//         imageUrl: 'images/bird-logo.png'
 //     });
 // }
 //

@@ -1,5 +1,14 @@
 console.log('这是content script!');
 
+// 注意，必须设置了run_at=document_start 此段代码才会生效
+document.addEventListener('DOMContentLoaded', function () {
+    //自动检测是否支持
+    var url = window.location.href;
+    sendMessageToBackground("support", url);
+
+});
+
+
 //接收到点击事件消息
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
@@ -9,13 +18,13 @@ chrome.extension.onRequest.addListener(
             injectCustomJs();
             // initCustomPanel();
             //发送消息请求数据
-            sendMessageToBackground();
+            var url = window.location.href;
+            sendMessageToBackground("url", url);
         }
         // sendResponse({farewell: "goodbye"});
         // else
         // sendResponse({}); // snub them.
     });
-
 
 
 // 向页面注入JS
@@ -35,36 +44,19 @@ function injectCustomJs(jsPath) {
 
 // 主动发送消息给后台
 // 要演示此功能，请打开控制台主动执行sendMessageToBackground()
-function sendMessageToBackground(message) {
-    var url = window.location.href;
-    chrome.runtime.sendMessage({greeting: message || url}, function (response) {
+function sendMessageToBackground(tag, message) {
+    chrome.runtime.sendMessage({type: message+":"+tag}, function (response) {
         var support = get_support(response);
         console.log(support);
         if (support) {
             initPage();
         } else {
-            init_not_support();
+            init_not_support_page();
         }
         tip('收到来自后台的回复：' + response);
     });
-}
 
 
-
-
-
-
-
-
-
-
-
-// 注意，必须设置了run_at=document_start 此段代码才会生效
-document.addEventListener('DOMContentLoaded', function () {
-    // 注入自定义JS
-});
-
-function init_not_support() {
 }
 
 
@@ -85,7 +77,36 @@ function initCustomPanel() {
     document.body.appendChild(panel);
 }
 
+
+function init_not_support_page() {
+    var page = document.createElement("div");
+    page.id = "not_support";
+    page.innerHTML = `
+
+    <div id="coupon_close_btn">
+        <img src="images/close_defalt.png" alt=""/>
+    </div>
+    <div id="img_not_support_birds">
+        <img src="images/not-supported.png" alt=""/>
+    </div>
+    <div id="recommend">
+        <p>Sorry,this site is not yet supported</p>
+    </div>
+
+    <!--<div id="submit_btn">-->
+    <!--<p>Submit a Coupon</p>-->
+    <!--</div>-->
+    <button id="submit_btn">
+        Submit a Coupon
+    </button>
+
+    `;
+
+    document.body.appendChild(page);
+}
+
 function initPage() {
+
     var page = document.createElement("div");
     page.id = 'rmnGenieWrappingDiv';
     page.innerHTML = `
@@ -97,8 +118,6 @@ function initPage() {
     `;
     document.body.appendChild(page);
 }
-
-
 
 
 // 接收来自后台的消息
@@ -114,7 +133,6 @@ function initPage() {
 //     //     sendResponse('我收到你的消息了：' + JSON.stringify(request));
 //     // }
 // });
-
 
 
 // 监听长连接
@@ -196,9 +214,11 @@ function parse_result(data, count, support, list) {
 
 
 function get_support(data) {
-    console.log(data);
-    var jsonData = $.parseJSON(data);
-    return jsonData.status;
+    return data.status;
+}
+
+function get_count(data) {
+    return data.count;
 }
 
 
