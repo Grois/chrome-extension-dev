@@ -1,34 +1,25 @@
-// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-//     var coupon_detail = "";
-//     var site = get_site(message);
-//
-//     $.ajax({
-//         url: "http://192.168.8.137:8888/api/" + site,
-//         // data: { url: message},
-//         dataType: 'json',
-//         async: false,
-//         timeout: 3000,
-//         method: 'GET',
-//         success: function (data) {
-//             console.log("success" + data);
-//             coupon_detail = data;
-//         },
-//         error: function (data) {
-//             console.log("error");
-//         }
-//     });
-//
-//
-//     if (coupon_detail != "") {
-//         sendResponse(coupon_detail);
-//     } else {
-//         sendResponse("Error");
-//         console.log("Error")
-//     }
-//
-//     sendResponse(null);
-//
-// });
+/**
+ * 点击按钮之后 向前台发送消息
+ */
+chrome.browserAction.onClicked.addListener(function () {
+    console.log("click");
+    chrome.tabs.getSelected(null, function (tab) {
+        chrome.tabs.sendRequest(tab.id, {event: "click"}, function (response) {
+            console.log("收到回复");
+        });
+    });
+});
+
+// 监听来自content-script的消息
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log('收到来自content-script的消息：');
+    console.log(request, sender, sendResponse);
+    // var data=$.parseJSON(request);
+    console.log(JSON.stringify(request));
+    var url = JSON.stringify(request).split("\"")[3];
+    var data = get_data(url);
+    sendResponse(data);
+});
 
 
 /*
@@ -68,6 +59,40 @@ function get_data(url) {
     return coupon_detail;
 }
 
+
+// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+//     var coupon_detail = "";
+//     var site = get_site(message);
+//
+//     $.ajax({
+//         url: "http://192.168.8.137:8888/api/" + site,
+//         // data: { url: message},
+//         dataType: 'json',
+//         async: false,
+//         timeout: 3000,
+//         method: 'GET',
+//         success: function (data) {
+//             console.log("success" + data);
+//             coupon_detail = data;
+//         },
+//         error: function (data) {
+//             console.log("error");
+//         }
+//     });
+//
+//
+//     if (coupon_detail != "") {
+//         sendResponse(coupon_detail);
+//     } else {
+//         sendResponse("Error");
+//         console.log("Error")
+//     }
+//
+//     sendResponse(null);
+//
+// });
+
+
 // web请求监听，最后一个参数表示阻塞式，需单独声明权限：webRequestBlocking
 // chrome.webRequest.onBeforeRequest.addListener(details => {
 //     // 大部分网站视频的type并不是media，且视频做了防下载处理，所以这里仅仅是为了演示效果，无实际意义
@@ -81,15 +106,4 @@ function get_data(url) {
 // }, {urls: ["<all_urls>"]}, ["blocking"]);
 //
 
-
-// 监听来自content-script的消息
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log('收到来自content-script的消息：');
-    console.log(request, sender, sendResponse);
-    // var data=$.parseJSON(request);
-    console.log(JSON.stringify(request));
-    var url=JSON.stringify(request).split("\"")[3];
-    var data=get_data(url);
-    sendResponse(data);
-});
 
