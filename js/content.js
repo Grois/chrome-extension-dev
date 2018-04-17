@@ -87,7 +87,7 @@ function init_not_support_page() {
         <img src="images/close_defalt.png" alt=""/>
     </div>
     <div id="img_not_support_birds">
-        <img src="images/not-supported.png" alt=""/>
+        <img src="http://192.168.8.243/bird-logo.png" alt=""/>
     </div>
     <div id="recommend">
         <p>Sorry,this site is not yet supported</p>

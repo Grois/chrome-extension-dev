@@ -25,12 +25,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         var url = JSON.stringify(request).split("\"")[3];
         var data = get_data(url);
         console.log(data.status);
+        console.log();
         if (data.status) {
             //    支持该站  图标变亮
-            active_browser_icon(true);
+            active_browser_icon(sender.tab.id,true);
         } else {
-            console.log(sender.tabId);
-            active_browser_icon(false);
+            active_browser_icon(sender.tab.id,false);
         }
     }
 
@@ -75,9 +75,7 @@ function get_data(url) {
 }
 
 
-function active_browser_icon(tag) {
-
-    getCurrentTabId(tabId => {
+function active_browser_icon(tabId,tag) {
         if (tag)
             var path = chrome.extension.getURL("images/bird-logo.png");
         else
@@ -88,8 +86,6 @@ function active_browser_icon(tag) {
             path: path,
             tabId: tabId
         });
-    });
-
 
 }
 
